@@ -21,6 +21,7 @@ io.sockets.on('connection', function(socket) {
         connections.splice(connections.indexOf(socket), 1)
         console.log("Вышел")
     })
+    
     socket.on('send mess', function(data) {
        io.sockets.emit('add mess', {msg: data}) 
     })

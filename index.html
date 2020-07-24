@@ -6,16 +6,11 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <title>Чат программа</title>
 </head>
-<body>
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <h5 class="my-0 mr-md-auto font-weight-normal"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">CHAT</font></font></h5>
-        <nav class="my-2 my-md-0 mr-md-3">
-          <a class="p-2 text-dark" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Особенности </font></font></a>
-          <a class="p-2 text-dark" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">корпоративной </font></font></a>
-          <a class="p-2 text-dark" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">поддержки </font></font></a>
-          <a class="p-2 text-dark" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Цены</font></font></a>
-        </nav>
-        <a class="btn btn-outline-primary" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">зарегистрироваться</font></font></a>
+<body class='bg-info'>
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-dark  shadow-sm text-white">
+        <h5 class=" my-0 mr-md-auto font-weight-normal"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">CHAT</font></font></h5>
+        <a class="btn btn-primary" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">ВОЙТИ</font></font></a>
+        <a class="btn btn-outline-primary" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">РЕГИСТРАЦИЯ</font></font></a>
       </div>
       <div class='container'>
           <div class='py-5 text-center'>
@@ -26,38 +21,67 @@
            <div class='col-6'>
             <h3>Форма сообщений</h3>
             <form id='messForm'>
-             <label for='message'>Сообщение</label>
+              <label for='name'>Name</label>
+              <input type = 'text' name = 'name' id = 'name' placeholder='Enter name' class='form-control'>
+             <label for = 'message'>Сообщение</label>
+             
              <textarea name='message' id='message' class='form-control' placeholder="Enter message"></textarea>
             <br>
             <input type='submit' value='SEND' class='btn btn-primary'>
+            <br>
             </form>
            </div>
-           <div class='col-6'>
+           <div class='col-6 shadow p-3 mb-5 bg-white rounded'>
             <h3>Сообщения</h3>
             <div id='all_mess'></div>
            </div>
           </div>
         </div>
+        <br>
         <script  src = "/socket.io/socket.io.js" > </script> 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
      <script>
          $(function () {
              let socket = io.connect()
+             let $name = $('#name')
              let $form = $('#messForm')
              let $textarea = $('#message')
              let $all_messages= $('#all_mess')
 
              $form.submit(function(event) {
                event.preventDefault()
-               socket.emit('send mess', $textarea.val())
+               socket.emit('send mess', {mess: $textarea.val(), name: $name.val()})
                $textarea.val('')
              })
 
              socket.on('add mess', function(data) {
-              $all_messages.append("<div>" + data.msg + "</div>")
+
+              $all_messages.append("<div class='btn btn-dark rounded-pill'>" + data.name + "</div><br>")
+              
+              $all_messages.append("<div class='btn btn-info rounded-pill '>" + data.mess + "</div><br>")
            })
              
          })
      </script>
+     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <div class="col">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+        <h2>Maria</h2>
+        <p>Last message</p>
+        <p><a class="btn btn-secondary" href="#" role="button">Go to play»</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+        <h2>Oleg</h2>
+        <p>Last message</p>
+        <p><a class="btn btn-secondary" href="#" role="button">Go to play »</a></p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col">
+        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+        <h2>Eva</h2>
+        <p>Last message</p>
+        <p><a class="btn btn-secondary" href="#" role="button">Go to play »</a></p>
+      </div><!-- /.col-lg-4 -->
+    </div>
     </body>
 </html>
